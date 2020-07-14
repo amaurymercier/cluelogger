@@ -1,33 +1,22 @@
 // Navigation.js
 
-import React from 'react'
+import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { createStackNavigator } from 'react-navigation-stack'
-import { createBottomTabNavigator } from 'react-navigation-tabs'
-import { createAppContainer} from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createAppContainer } from 'react-navigation';
 
+import Investigations from '../Components/Investigations';
 
+import Clues from '../Components/Clues';
+import ClueDetail from '../Components/ClueDetail';
 
+import Messages from '../Components/Messages';
 
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Investigations from '../Components/Investigations'
-
-import Clues from '../Components/Clues'
-import ClueDetail from '../Components/ClueDetail'
-
-import Messages from '../Components/Messages'
-
-
-
-import Icon from 'react-native-vector-icons/FontAwesome5'
-
-import my_colors from '../Helpers/MyColors.js'
-
-
-
-
-
+import my_colors from '../Helpers/MyColors.js';
 
 const InvestigationsStackNavigator = createStackNavigator({
   Investigations: {
@@ -40,17 +29,14 @@ const InvestigationsStackNavigator = createStackNavigator({
       headerTintColor: '#FFF',
       headerTitleStyle: {
         fontSize: 22,
-        fontFamily: "Avenir"
+        fontFamily: 'Avenir',
       },
       cardStyle: {
         backgroundColor: '#FFF',
       },
-    }
-  }
-})
-
-
-
+    },
+  },
+});
 
 const CluesStackNavigator = createStackNavigator({
   Clues: {
@@ -63,12 +49,12 @@ const CluesStackNavigator = createStackNavigator({
       headerTintColor: '#FFF',
       headerTitleStyle: {
         fontSize: 22,
-        fontFamily: "Avenir"
+        fontFamily: 'Avenir',
       },
       cardStyle: {
         backgroundColor: '#FFF',
       },
-    }
+    },
   },
   ClueDetail: {
     screen: ClueDetail,
@@ -80,17 +66,14 @@ const CluesStackNavigator = createStackNavigator({
       headerTintColor: '#FFF',
       headerTitleStyle: {
         fontSize: 22,
-        fontFamily: "Avenir"
+        fontFamily: 'Avenir',
       },
       cardStyle: {
         backgroundColor: '#FFF',
       },
-    }
-  }
-})
-
-
-
+    },
+  },
+});
 
 const MessagesStackNavigator = createStackNavigator({
   Messages: {
@@ -103,23 +86,14 @@ const MessagesStackNavigator = createStackNavigator({
       headerTintColor: '#FFF',
       headerTitleStyle: {
         fontSize: 22,
-        fontFamily: "Avenir"
+        fontFamily: 'Avenir',
       },
       cardStyle: {
         backgroundColor: '#FFF',
       },
-    }
-  }
-})
-
-
-
-
-
-
-
-
-
+    },
+  },
+});
 
 const ClueLoggerTabNavigator = createBottomTabNavigator(
   {
@@ -127,29 +101,51 @@ const ClueLoggerTabNavigator = createBottomTabNavigator(
       screen: InvestigationsStackNavigator,
       navigationOptions: {
         tabBarLabel: 'Investigations',
-        tabBarIcon: ({tintColor}) => {
-          return (<Icon name="search" size={28} color={tintColor} style={styles.icon} />)
+        tabBarIcon: ({ tintColor }) => {
+          return (
+            <Icon
+              name="search"
+              size={28}
+              color={tintColor}
+              style={styles.icon}
+            />
+          );
         },
-      }
+      },
     },
     Clues: {
       screen: CluesStackNavigator,
       navigationOptions: {
         tabBarLabel: 'Clues',
-        tabBarIcon: ({tintColor}) => {
-          return (<Icon name="list-ul" size={28} color={tintColor} style={styles.icon}  />)
-        }
-      }
+        tabBarIcon: ({ tintColor }) => {
+          return (
+            <Icon
+              name="list-ul"
+              size={28}
+              color={tintColor}
+              style={styles.icon}
+            />
+          );
+        },
+      },
     },
     Messages: {
       screen: MessagesStackNavigator,
       navigationOptions: {
         tabBarLabel: 'Messages',
-        tabBarIcon: ({tintColor}) => {
-          return (<Icon name="comments" solid size={28} color={tintColor} style={styles.icon} />)
-        }
-      }
-    }
+        tabBarIcon: ({ tintColor }) => {
+          return (
+            <Icon
+              name="comments"
+              solid
+              size={28}
+              color={tintColor}
+              style={styles.icon}
+            />
+          );
+        },
+      },
+    },
   },
   {
     tabBarOptions: {
@@ -161,23 +157,16 @@ const ClueLoggerTabNavigator = createBottomTabNavigator(
       style: {
         backgroundColor: '#FFF',
         borderTopWidth: 0.5,
-        borderTopColor: "transparent"
+        borderTopColor: 'transparent',
       },
     },
-  }
-)
-
-
+  },
+);
 
 const styles = StyleSheet.create({
   icon: {
-    marginTop : 5
-  }
-})
+    marginTop: 5,
+  },
+});
 
-
-
-
-
-
-export default createAppContainer(ClueLoggerTabNavigator)
+export default createAppContainer(ClueLoggerTabNavigator);
