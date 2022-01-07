@@ -9,11 +9,10 @@ function ClueList(props) {
       style={style.list}
       data={props.Clues}
       keyExtractor={(item) => item._id.toString()}
-      renderItem={({ item }) => <ClueItem Clue={item} navigation={props.navigation}/>}
+      renderItem={({ item }) => (
+        <ClueItem Clue={item} navigation={props.navigation} />
+      )}
       onEndReachedThreshold={0.25}
-      onEndReached={() => {
-        console.log('je suis arrive en bas de la liste de Clues');
-      }}
     />
   );
 }

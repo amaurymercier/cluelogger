@@ -14,6 +14,7 @@ import moment from 'moment/min/moment-with-locales';
 import { PacmanIndicator, WaveIndicator } from 'react-native-indicators';
 
 import colors from '../helpers/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const indiceImage = require('../assets/indice.png');
 
@@ -49,29 +50,33 @@ function ClueDetail({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [clue, setClue] = useState([]);
 
-  const { clueId } = route.params.clueId;
+  // const clueId = route.params.clueId;
 
   useEffect(() => {
     // getClueWithIdFromApi(props.navigation.state.params.idClue).then( (data) => {
-    setClue({
-      _id: 1,
-      title: 'La clef des champs se trouve chez Didier',
-      text: 'Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne.',
-      image_path: 'none',
-      date: '2022-01-07 15:23',
-    });
-    setIsLoading(false);
-  }, []);
+    (async () => {
+      const storedClues = await AsyncStorage.getItem('currentClues');
+      const loadedClues = JSON.parse(storedClues || '{}');
+      if (route.params.clueId in loadedClues) {
+        setClue(loadedClues[route.params.clueId]);
+      } else {
+        setClue({
+          _id: -1,
+          title: 'Indice introuvable.',
+          text: 'Impossible de charger cet indice.',
+          image_path: 'indice.png',
+        });
+      }
+      setIsLoading(false);
+    })();
+  }, [route.params.clueId]);
 
-  console.log(clue.title);
-  console.log(clue.date);
-  console.log(clue.Clue);
   return (
     <ScrollView style={styles.main_container} stickyHeaderIndices={[1]}>
       <View style={styles.top_image}>
         <Image
           style={styles.image}
-          source={ indiceImage }
+          source={indiceImage}
           onLoadEnd={() => setIsLoadingImage(false)}
         />
         {isLoadingImage && (

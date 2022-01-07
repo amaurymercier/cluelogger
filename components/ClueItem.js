@@ -18,7 +18,7 @@ function ClueItem(props) {
     <View style={styles.main_container}>
       <View style={styles.left_panel}>
         <TouchableOpacity
-          onPress={() => navigation.push('ClueDetail', { clueId: 1 })}
+          onPress={() => navigation.push('ClueDetail', { clueId: props.Clue._id })}
           activeOpacity={0.9}
         >
           <View style={styles.image_container}>
@@ -39,7 +39,7 @@ function ClueItem(props) {
 
       <TouchableOpacity
         style={styles.right_panel}
-        onPress={() => navigation.push('ClueDetail', { clueId: 1 })}
+        onPress={() => navigation.push('ClueDetail', { clueId: props.Clue._id })}
         activeOpacity={0.9}
       >
         <View style={styles.content_container}>

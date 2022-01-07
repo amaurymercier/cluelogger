@@ -5,18 +5,29 @@ import { PacmanIndicator } from 'react-native-indicators';
 
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import colors from '../helpers/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+import allClues from '../knowledgebase/Clues';
 
-function Investigations() {
+function Investigations({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasPermission, setHasPermission] = useState(false);
   const [scanned, setScanned] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     setIsLoading(false);
-  }, []);
+    const focusListener = navigation.addListener('focus', () =>
+      setIsFocused(true),
+    );
+    const blurListener = navigation.addListener('blur', () =>
+      setIsFocused(false),
+    );
+    return () => {
+      focusListener.remove();
+      blurListener.remove();
+    };
+  }, [navigation]);
 
   useEffect(() => {
     (async () => {
@@ -26,11 +37,31 @@ function Investigations() {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
+    // Ensure clue is loaded in storage
+    (async () => {
+      const clueId = parseInt(data, 10);
+      const storedClues = await AsyncStorage.getItem('currentClues');
+      const loadedClues = JSON.parse(storedClues || '{}');
+      if (clueId in allClues) {
+        loadedClues[clueId] = allClues[clueId];
+      } else {
+        console.log(`Invalid clueId: ${clueId}`);
+      }
+      await AsyncStorage.setItem('currentClues', JSON.stringify(loadedClues));
+      navigation.jumpTo('CluesStack');
+    })();
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
-  console.log(hasPermission);
+  if (!isFocused) {
+    return (
+      <View>
+        <PacmanIndicator size={60} color={colors[3]} />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.main_container}>
       <View style={styles.qr_panel}>
