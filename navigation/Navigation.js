@@ -138,23 +138,23 @@ export default function simpleTabContainer() {
   return (
     <NavigationContainer>
       <ClueLoggerTab.Navigator>
-        {/*<ClueLoggerTab.Screen*/}
-        {/*  name="Investigations"*/}
-        {/*  component={<InvestigationsStackContainer/>}*/}
-        {/*  options={{*/}
-        {/*    tabBarLabel: 'Investigations',*/}
-        {/*    tabBarIcon: ({ tintColor }) => {*/}
-        {/*      return (*/}
-        {/*        <Icon*/}
-        {/*          name="search"*/}
-        {/*          size={28}*/}
-        {/*          color={tintColor}*/}
-        {/*          style={styles.icon}*/}
-        {/*        />*/}
-        {/*      );*/}
-        {/*    },*/}
-        {/*  }}*/}
-        {/*/>*/}
+        <ClueLoggerTab.Screen
+          name="Investigations"
+          component={Investigations}
+          options={{
+            tabBarLabel: 'Investigations',
+            tabBarIcon: ({ tintColor }) => {
+              return (
+                <Icon
+                  name="search"
+                  size={28}
+                  color={tintColor}
+                  style={styles.icon}
+                />
+              );
+            },
+          }}
+        />
         <ClueLoggerTab.Screen
           name="CluesStack"
           component={CluesStackNavigator}
