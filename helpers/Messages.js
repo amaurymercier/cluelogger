@@ -1,15 +1,12 @@
-
-export default data = [
+export default [
   {
     id: 1,
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc feugiat ultrices efficitur. Vivamus maximus nunc sed massa finibus maximus sit amet eget ante',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc feugiat ultrices efficitur. Vivamus maximus nunc sed massa finibus maximus sit amet eget ante',
     type: 'sent',
   },
   {
     id: 2,
-    text:
-      'Vivamus gravida metus tellus, placerat porttitor ante imperdiet vitae. Phasellus placerat vitae nunc sit amet accumsan. Fusce dapibus mi ut augue blandit tempus. Mauris posuere orci nec mattis aliquam.',
+    text: 'Vivamus gravida metus tellus, placerat porttitor ante imperdiet vitae. Phasellus placerat vitae nunc sit amet accumsan. Fusce dapibus mi ut augue blandit tempus. Mauris posuere orci nec mattis aliquam.',
     type: 'received',
   },
   {
@@ -19,14 +16,12 @@ export default data = [
   },
   {
     id: 4,
-    text:
-      'Etiam pretium libero dapibus magna feugiat, nec commodo lectus ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus dignissim massa ac congue. Nullam porttitor ac augue vel elementum. Vestibulum rutrum elementum purus, ut varius nulla vulputate sit amet.',
+    text: 'Etiam pretium libero dapibus magna feugiat, nec commodo lectus ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus dignissim massa ac congue. Nullam porttitor ac augue vel elementum. Vestibulum rutrum elementum purus, ut varius nulla vulputate sit amet.',
     type: 'received',
   },
   {
     id: 5,
-    text:
-      'Praesent neque ipsum, viverra ut nisl pharetra, luctus sodales urna. Suspendisse eleifend efficitur sagittis',
+    text: 'Praesent neque ipsum, viverra ut nisl pharetra, luctus sodales urna. Suspendisse eleifend efficitur sagittis',
     type: 'sent',
   },
   {

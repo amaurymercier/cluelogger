@@ -1,39 +1,30 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import colors from '../helpers/Colors';
 
-import my_colors from '../helpers/Colors.js';
-
-class MessageItem extends React.Component {
-  constructor(props) {
-    super(props);
+function MessageItem(props) {
+  if (props.message_type === 'received') {
+    return (
+      <View style={[styles.message, styles.message_received]}>
+        <Text style={[styles.message_text, styles.message_text_received]}>
+          {props.text}
+        </Text>
+      </View>
+    );
   }
-
-  render() {
-    if (this.props.message_type == 'received') {
-      return (
-        <View style={[styles.message, styles.message_received]}>
-          <Text style={[styles.message_text, styles.message_text_received]}>
-            {this.props.text}
-          </Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={[styles.message, styles.message_sent]}>
-          <Text style={[styles.message_text, styles.message_text_sent]}>
-            {this.props.text}
-          </Text>
-        </View>
-      );
-    }
-  }
+  return (
+    <View style={[styles.message, styles.message_sent]}>
+      <Text style={[styles.message_text, styles.message_text_sent]}>
+        {props.text}
+      </Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   message: {
-    backgroundColor: my_colors[2],
+    backgroundColor: colors[2],
     borderRadius: 20,
     padding: 10,
     paddingLeft: 15,
@@ -41,7 +32,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   message_sent: {
-    backgroundColor: my_colors[3],
+    backgroundColor: colors[3],
     marginLeft: 50,
   },
   message_received: {
@@ -50,14 +41,14 @@ const styles = StyleSheet.create({
   },
 
   message_text: {
-    fontFamily: 'Avenir',
+    fontFamily: 'Roboto',
     fontSize: 16,
   },
   message_text_sent: {
     color: 'white',
   },
   message_text_received: {
-    color: my_colors[4],
+    color: colors[4],
   },
 });
 

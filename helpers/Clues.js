@@ -1,17 +1,15 @@
-export default data = [
+export default [
   {
     _id: 1,
     title: "Momo n'est vraiment pas qui vous pensez...",
-    text:
-      "Aussi étonant que cela puisse paraitre, ce bon vieil Amaury est en réalité un boulanger. C'est chez Momo qu'on trouve les meilleures baguettes. Cherchez la mie en or, c'est sur lui que vous tomberez...",
+    text: "Aussi étonant que cela puisse paraitre, ce bon vieil Amaury est en réalité un boulanger. C'est chez Momo qu'on trouve les meilleures baguettes. Cherchez la mie en or, c'est sur lui que vous tomberez...",
     image_path: 'none',
     date: '',
   },
   {
     _id: 2,
     title: 'La clef des champs se trouve chez Didier',
-    text:
-      'Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne',
+    text: 'Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne',
     image_path: 'none',
     date: '',
   },

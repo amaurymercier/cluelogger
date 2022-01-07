@@ -1,92 +1,63 @@
 // Components/ClueItem.js
 
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Share,
-} from 'react-native';
-
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { WaveIndicator } from 'react-native-indicators';
 
-import my_colors from '../helpers/Colors.js';
-import moment from 'moment/min/moment-with-locales';
+import colors from '../helpers/Colors';
 
-import FadeIn from './FadeIn';
+const indiceImage = require('../assets/indice.png');
 
-class ClueItem extends React.Component {
-  constructor(props) {
-    super(props);
+function ClueItem(props) {
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
 
-    this.state = {
-      isLoadingImage: true,
-    };
-  }
+  const { Clue, navigation } = props;
 
-  _displayClueImage(Image_path) {
-    return (
-      <View style={styles.image_container}>
-        <Image
-          style={styles.image}
-          source={require('../assets/indice.png')}
-          onLoadEnd={() => this.setState({ isLoadingImage: false })}
-        />
-      </View>
-    );
-  }
-
-  _displayLoading() {
-    if (this.state.isLoadingImage) {
-      return (
-        <View style={styles.loading_container}>
-          <WaveIndicator size={30} color={my_colors[3]} />
-        </View>
-      );
-    }
-  }
-
-  render() {
-    const { Clue, displayDetailForClue } = this.props;
-
-    return (
-      <FadeIn>
-        <View style={styles.main_container}>
-          <View style={styles.left_panel}>
-            <TouchableOpacity
-              onPress={() => displayDetailForClue(Clue._id)}
-              activeOpacity={0.9}
-            >
-              {this._displayClueImage(Clue.image_path)}
-            </TouchableOpacity>
-            {this._displayLoading()}
+  return (
+    // <FadeIn>
+    <View style={styles.main_container}>
+      <View style={styles.left_panel}>
+        <TouchableOpacity
+          onPress={() => navigation.push('ClueDetail', { clueId: 1 })}
+          activeOpacity={0.9}
+        >
+          <View style={styles.image_container}>
+            <Image
+              style={styles.image}
+              source={indiceImage}
+              onLoadEnd={() => setIsLoadingImage(false)}
+            />
           </View>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.right_panel}
-            onPress={() => displayDetailForClue(Clue._id)}
-            activeOpacity={0.9}
-          >
-            <View style={styles.content_container}>
-              <View style={styles.header_container}>
-                <Text style={styles.title_text} numberOfLines={2}>
-                  {Clue.title}{' '}
-                </Text>
-              </View>
-              <View style={styles.description_container}>
-                <Text style={styles.description_text} numberOfLines={8}>
-                  {Clue.text}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+        {isLoadingImage && (
+          <View style={styles.loading_container}>
+            <WaveIndicator size={30} color={colors[3]} />
+          </View>
+        )}
+      </View>
+
+      <TouchableOpacity
+        style={styles.right_panel}
+        onPress={() => navigation.push('ClueDetail', { clueId: 1 })}
+        activeOpacity={0.9}
+      >
+        <View style={styles.content_container}>
+          <View style={styles.header_container}>
+            <Text style={styles.title_text} numberOfLines={2}>
+              {Clue.title}{' '}
+            </Text>
+          </View>
+          <View style={styles.description_container}>
+            <Text style={styles.description_text} numberOfLines={8}>
+              {Clue.text}
+            </Text>
+          </View>
         </View>
-      </FadeIn>
-    );
-  }
+      </TouchableOpacity>
+    </View>
+    // </FadeIn>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -96,9 +67,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     marginTop: 10,
-    backgroundColor: my_colors[0],
+    backgroundColor: colors[0],
     borderWidth: 1,
-    borderColor: my_colors[1],
+    borderColor: colors[1],
     padding: 5,
     borderRadius: 10,
   },
@@ -128,13 +99,12 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   header_container: {
-    //flex: 4,
     flexDirection: 'row',
   },
   title_text: {
     fontWeight: 'bold',
     fontSize: 16,
-    fontFamily: 'Avenir',
+    fontFamily: 'Roboto',
     flex: 1,
     flexWrap: 'wrap',
     paddingRight: 5,
@@ -148,7 +118,7 @@ const styles = StyleSheet.create({
   },
   description_text: {
     color: '#666666',
-    fontFamily: 'Avenir',
+    fontFamily: 'Roboto',
     textAlign: 'justify',
   },
 

@@ -1,59 +1,33 @@
-// Components/Clues.js
-
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
-
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { PacmanIndicator } from 'react-native-indicators';
 
 import ClueList from './ClueList';
 
-import my_colors from '../helpers/Colors.js';
+import colors from '../helpers/Colors';
 
 // for testing purposes -> shall be replced with server messages
-import my_clues from '../helpers/Clues.js';
+import basicClues from '../helpers/Clues';
 
-class Clues extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-    };
-  }
+function Clues(props) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [clues, setClues] = useState({});
 
-  componentDidMount() {
-    this.setState({
-      clues: my_clues,
-      isLoading: false,
-    });
-  }
+  useEffect(() => {
+    setClues(basicClues);
+    setIsLoading(false);
+  });
 
-  _displayLoading() {
-    if (this.state.isLoading) {
-      return (
+  return (
+    <View style={styles.main_container}>
+      <ClueList Clues={clues} navigation={props.navigation} />
+      {isLoading && (
         <View style={styles.loading_container}>
-          <PacmanIndicator size={60} color={my_colors[3]} />
+          <PacmanIndicator size={60} color={colors[3]} />
         </View>
-      );
-    }
-  }
-
-  render() {
-    return (
-      <View style={styles.main_container}>
-        <ClueList Clues={this.state.clues} navigation={this.props.navigation} />
-
-        {this._displayLoading()}
-      </View>
-    );
-  }
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

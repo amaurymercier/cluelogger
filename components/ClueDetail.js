@@ -1,169 +1,101 @@
 // Components/ClueDetail.js
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Image,
-  Button,
-  TouchableOpacity,
-  Share,
   Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
 import moment from 'moment/min/moment-with-locales';
-import numeral from 'numeral';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import { PacmanIndicator, WaveIndicator } from 'react-native-indicators';
 
-import my_colors from '../helpers/Colors.js';
+import colors from '../helpers/Colors';
 
-class ClueDetail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Clue: [],
-      isLoading: true,
-      isLoadingImage: true,
-    };
+const indiceImage = require('../assets/indice.png');
+
+function adaptDatabaseText(text) {
+  let adaptedText = '';
+  if (text !== undefined) {
+    adaptedText = text.replace(/\\n/g, '\n');
   }
+  return adaptedText;
+}
 
-  _displayClueImage(Image_path) {
-    const completeImagePath =
-      'https://olympyxt.herokuapp.com/rectangle_' + Image_path;
-
-    return (
-      <Image
-        style={styles.image}
-        source={{ uri: completeImagePath }}
-        onLoadEnd={() => this.setState({ isLoadingImage: false })}
-      />
-    );
-  }
-
-  _displayClueFavIcon() {
-    const Clue = this.state.Clue;
-
-    if (
-      this.props.favoriteClues.findIndex((item) => Clue._id === item._id) !== -1
-    ) {
-      return (
-        <TouchableOpacity onPress={() => this._toggleFavorite()}>
-          <Icon name="heart" color="red" solid style={styles.icon} />
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity onPress={() => this._toggleFavorite()}>
-          <Icon name="heart" color="grey" light style={styles.icon} />
-        </TouchableOpacity>
-      );
-    }
-  }
-
-  // pour ajouter ou retirer une Clue des favorites
-  _toggleFavorite() {
-    const action = { type: 'TOGGLE_FAVORITE_Clue', value: this.state.Clue };
-    this.props.dispatch(action);
-  }
-
-  _displayShareIcon() {
-    return (
-      <TouchableOpacity onPress={() => this._shareClue()}>
-        <Icon name="share-square" color="grey" style={styles.icon} />
-      </TouchableOpacity>
-    );
-  }
-
-  _shareClue() {
-    const Clue = this.state.Clue;
-    const shared_text =
-      '🏆 Des nouvelles des Olympiades ! 🏆 \n \n' + Clue.description;
-    Share.share({ message: shared_text });
-  }
-
-  _adaptDatabaseText(text_to_be_adapted) {
-    let adapted_text = '';
-    if (text_to_be_adapted != undefined) {
-      adapted_text = text_to_be_adapted.replace(/\\n/g, '\n');
-    }
-    return adapted_text;
-  }
-
-  componentDidMount() {
-    getClueWithIdFromApi(this.props.navigation.state.params.idClue).then(
-      (data) => {
-        // console.log(data)
-        this.setState(
-          {
-            Clue: data,
-            isLoading: false,
-          },
-          () => {
-            console.log('Clue chargée \n');
-          },
-        );
-      },
-    );
-  }
-
-  _displayImageLoading() {
-    if (this.state.isLoadingImage) {
-      return (
-        <View style={styles.loading_image_container}>
-          <WaveIndicator size={30} color={my_colors[3]} />
-        </View>
-      );
-    }
-  }
-
-  _displayLoading() {
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.loading_container}>
-          <PacmanIndicator size={60} color={my_colors[3]} />
-        </View>
-      );
-    }
-  }
-
-  render() {
-    return (
-      <ScrollView style={styles.main_container} stickyHeaderIndices={[1]}>
-        <View style={styles.top_image}>
-          {this._displayClueImage(this.state.Clue.image_path)}
-          {this._displayImageLoading()}
-        </View>
-
-        <View style={styles.top_container}>
-          <View style={styles.white_top}>
-            <View style={styles.title_container}>
-              <Text style={styles.title_text} numberOfLines={2}>
-                {this.state.Clue.titre}{' '}
-              </Text>
-            </View>
-            <View style={styles.icon_bar}>
-              {this._displayClueFavIcon()}
-              {this._displayShareIcon()}
-              <Text style={styles.date_text}>
-                {moment(new Date(this.state.Clue.date)).format('LL')}
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.description_container}>
-          <Text style={styles.description_text}>
-            {this._adaptDatabaseText(this.state.Clue.texte)}
+function Clue(props) {
+  return (
+    <View style={styles.top_container}>
+      <View style={styles.white_top}>
+        <View style={styles.title_container}>
+          <Text style={styles.title_text} numberOfLines={2}>
+            {props.clue.title}{' '}
           </Text>
         </View>
+        <View style={styles.icon_bar}>
+          <Text style={styles.date_text}>
+            {moment(props.clue.date).format('LL')}
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+}
 
-        {this._displayLoading()}
-      </ScrollView>
-    );
-  }
+function ClueDetail({ route, navigation }) {
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [clue, setClue] = useState([]);
+
+  const { clueId } = route.params.clueId;
+
+  useEffect(() => {
+    // getClueWithIdFromApi(props.navigation.state.params.idClue).then( (data) => {
+    setClue({
+      _id: 1,
+      title: 'La clef des champs se trouve chez Didier',
+      text: 'Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne. Eh oui ! Après une coupe du monde riche en émotions, notre meilleur sélectionneur est parti se reposer dans sa maison de campagne.',
+      image_path: 'none',
+      date: '2022-01-07 15:23',
+    });
+    setIsLoading(false);
+  }, []);
+
+  console.log(clue.title);
+  console.log(clue.date);
+  console.log(clue.Clue);
+  return (
+    <ScrollView style={styles.main_container} stickyHeaderIndices={[1]}>
+      <View style={styles.top_image}>
+        <Image
+          style={styles.image}
+          source={ indiceImage }
+          onLoadEnd={() => setIsLoadingImage(false)}
+        />
+        {isLoadingImage && (
+          <View style={styles.loading_image_container}>
+            <WaveIndicator size={30} color={colors[3]} />
+          </View>
+        )}
+      </View>
+
+      {Clue({ clue })}
+
+      <View style={styles.description_container}>
+        <Text style={styles.description_text}>
+          {adaptDatabaseText(clue.text)}
+        </Text>
+      </View>
+
+      {isLoading && (
+        <View style={styles.loading_container}>
+          <PacmanIndicator size={60} color={colors[3]} />
+        </View>
+      )}
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -206,7 +138,7 @@ const styles = StyleSheet.create({
   title_text: {
     fontWeight: 'bold',
     fontSize: 22,
-    fontFamily: 'Avenir',
+    fontFamily: 'Roboto',
     flexWrap: 'wrap',
     textAlign: 'center',
     marginBottom: 15,
@@ -241,7 +173,7 @@ const styles = StyleSheet.create({
 
   description_text: {
     color: '#666666',
-    fontFamily: 'Avenir',
+    fontFamily: 'Roboto',
     textAlign: 'justify',
     fontSize: 15,
     lineHeight: 25,

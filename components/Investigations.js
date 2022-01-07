@@ -1,28 +1,35 @@
-// Components/Investigations.js
-
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  Alert,
+  Dimensions,
   StyleSheet,
-  View,
-  Text,
   Switch,
   TextInput,
   TouchableOpacity,
-  Alert,
-  Linking,
-  Dimensions,
+  View,
 } from 'react-native';
-
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { PacmanIndicator } from 'react-native-indicators';
 
-import my_colors from '../helpers/Colors.js';
+import colors from '../helpers/Colors';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-class Investigations extends React.Component {
+function Investigations() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [switchValue, setSwitchValue] = useState(false);
+  const [codeText, setCodeText] = useState('');
+
+  useEffect(() => {
+    setIsLoading(false);
+  });
+
+
+}
+
+class _Investigations extends React.Component {
   constructor(props) {
     super(props);
     (this.codeText = ''),
@@ -32,18 +39,12 @@ class Investigations extends React.Component {
       });
   }
 
-  componentDidMount() {
-    this.setState({
-      isLoading: false,
-    });
-  }
-
   _codeTextChanged(text) {
     this.codeText = text;
   }
 
   testCode() {
-    if (this.codeText != '') {
+    if (this.codeText !== '') {
       Alert.alert(
         'Oups 🧐',
         'Le code ne correspond à aucun indice... ',
@@ -54,24 +55,17 @@ class Investigations extends React.Component {
   }
 
   toggleSwitch = (value) => {
-    if (!value){
-      Alert.alert(
-        '📸',
-        "Lecteur de QR code coupé",
-        [
-          {text: 'Okay'},
-        ],
-        { cancelable: false }
-      )
+    if (!value) {
+      Alert.alert('📸', 'Lecteur de QR code coupé', [{ text: 'Okay' }], {
+        cancelable: false,
+      });
     }
     this.setState({ switchValue: value });
   };
 
   _displayQRReader() {
     if (this.state.switchValue) {
-      return (
-        <BarCodeScanner />
-      );
+      return <BarCodeScanner />;
     }
   }
 
@@ -96,7 +90,7 @@ class Investigations extends React.Component {
     if (this.state.isLoading) {
       return (
         <View style={styles.loading_container}>
-          <PacmanIndicator size={60} color={my_colors[3]} />
+          <PacmanIndicator size={60} color={colors[3]} />
         </View>
       );
     }
@@ -136,7 +130,7 @@ class Investigations extends React.Component {
               style={styles.switch}
               onValueChange={this.toggleSwitch}
               value={this.state.switchValue}
-              trackColor={{ false: '#CCC', true: my_colors[2] }}
+              trackColor={{ false: '#CCC', true: colors[2] }}
               thumbColor={'white'}
             />
           </View>
@@ -168,7 +162,7 @@ const styles = StyleSheet.create({
     marginRight: 25,
     paddingLeft: 20,
     height: 50,
-    borderColor: my_colors[2],
+    borderColor: colors[2],
     borderWidth: 1,
     borderRadius: 100,
     color: '#666',
@@ -176,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   search_button: {
-    backgroundColor: my_colors[2],
+    backgroundColor: colors[2],
     width: 50,
     height: 50,
     borderRadius: 100,
@@ -186,7 +180,7 @@ const styles = StyleSheet.create({
 
   qr_panel: {
     height: DEVICE_HEIGHT / 2,
-    // backgroundColor: my_colors[0],
+    // backgroundColor: colors[0],
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
@@ -202,7 +196,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: my_colors[4],
+    borderColor: colors[4],
     backgroundColor: 'lightgrey',
   },
 

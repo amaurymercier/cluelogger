@@ -1,24 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
+  Alert,
+  Animated,
   FlatList,
+  Keyboard,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
-  Keyboard,
-  Animated,
-  Alert,
+  View,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import MessageItem from './MessageItem.js';
+import MessageItem from './MessageItem';
 
-import my_colors from '../helpers/Colors.js';
+import colors from '../helpers/Colors';
 
 // for testing purposes -> shall be replced with server messages
-import my_messages from '../helpers/Messages.js';
+import messages from '../helpers/Messages';
+
+// function Messages(props) {
+//   let messageText = '';
+//   let keyboard
+//   [conversation, setConversation] = useState([]);
+//
+//
+// }
 
 class Messages extends React.Component {
   constructor(props) {
@@ -31,6 +38,21 @@ class Messages extends React.Component {
     };
 
     this.keyboardHeight = new Animated.Value(0);
+  }
+
+  componentDidMount() {
+    this.keyboardWillShowSub = Keyboard.addListener(
+      'keyboardWillShow',
+      this.keyboardWillShow,
+    );
+    this.keyboardWillHideSub = Keyboard.addListener(
+      'keyboardWillHide',
+      this.keyboardWillHide,
+    );
+
+    this.setState({
+      conversation: messages,
+    });
   }
 
   componentWillUnmount() {
@@ -59,26 +81,11 @@ class Messages extends React.Component {
   }
 
   sendMessage() {
-    if (this.messageText != '') {
+    if (this.messageText !== '') {
       Alert.alert('🚀', 'Message envoyé !', [{ text: 'Bien' }], {
         cancelable: false,
       });
     }
-  }
-
-  componentDidMount() {
-    this.keyboardWillShowSub = Keyboard.addListener(
-      'keyboardWillShow',
-      this.keyboardWillShow,
-    );
-    this.keyboardWillHideSub = Keyboard.addListener(
-      'keyboardWillHide',
-      this.keyboardWillHide,
-    );
-
-    this.setState({
-      conversation: my_messages,
-    });
   }
 
   render() {
@@ -148,7 +155,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     paddingLeft: 20,
     height: 50,
-    borderColor: my_colors[2],
+    borderColor: colors[2],
     borderWidth: 1,
     borderRadius: 100,
     color: '#666',
@@ -156,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   send_button: {
-    backgroundColor: my_colors[2],
+    backgroundColor: colors[2],
     width: 40,
     height: 40,
     borderRadius: 100,

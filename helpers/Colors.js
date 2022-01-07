@@ -9,11 +9,4 @@
 //    'orange'
 // ]
 
-export default data = [
-  '#DAF8A5',
-  '#ADF035',
-  '#94E700',
-  '#6DAA00',
-  '#476E00',
-  'green',
-];
+export default ['#DAF8A5', '#ADF035', '#94E700', '#6DAA00', '#476E00', 'green'];
