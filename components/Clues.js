@@ -22,8 +22,6 @@ function Clues({ navigation }) {
     }
   }
 
-  const [isFocused, setIsFocused] = useState(false);
-
   useEffect(() => {
     const focusListener = navigation.addListener(
       'focus',
