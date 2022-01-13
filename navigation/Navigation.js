@@ -137,7 +137,7 @@ export default function simpleTabContainer() {
           name="Investigations"
           component={Investigations}
           options={{
-            tabBarLabel: 'Investigations',
+            tabBarLabel: 'Scanner',
             tabBarIcon: ({ tintColor }) => {
               return (
                 <Icon

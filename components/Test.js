@@ -93,9 +93,7 @@ class Test extends React.Component {
               )}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.5}
-              onEndReached={() => {
-                console.log('Just reached end of Flatlist');
-              }}
+              onEndReached={() => {}}
             />
           </View>
 

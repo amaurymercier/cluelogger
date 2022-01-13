@@ -30,7 +30,7 @@ export default {
     image: 'indice.png',
   },
   code_1234: {
-    _id: "code_1234",
+    _id: 'code_1234',
     title: 'Test code',
     text: 'On test un code.',
     image: 'unlocked.png',

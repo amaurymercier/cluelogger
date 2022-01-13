@@ -9,11 +9,12 @@ function Code({ navigation }) {
   const onChangeText = (t) => {
     (async () => {
       const codeKey = `code_${t}`;
-      console.log(codeKey);
       if (codeKey in allClues) {
         const storedClues = await AsyncStorage.getItem('currentClues');
         const loadedClues = JSON.parse(storedClues || '{}');
-        loadedClues[codeKey] = allClues[codeKey];
+        if (!(codeKey in loadedClues)) {
+          loadedClues[codeKey] = allClues[codeKey];
+        }
         loadedClues[codeKey].key = Object.keys(loadedClues).length;
         await AsyncStorage.setItem('currentClues', JSON.stringify(loadedClues));
         navigation.jumpTo('Indices trouvés');

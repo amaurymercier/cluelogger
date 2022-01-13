@@ -15,8 +15,6 @@ function Clues({ navigation }) {
     try {
       const storedClues = await AsyncStorage.getItem('currentClues');
       const loadedClues = JSON.parse(storedClues || '{}');
-      console.log("loaded Clues :");
-      console.log(loadedClues);
       setClues(loadedClues);
       setIsLoading(false);
     } catch (e) {
@@ -31,9 +29,7 @@ function Clues({ navigation }) {
       'focus',
       () => {
         (async () => {
-          console.log('Refocusing.');
           await fetchClues();
-          console.log("Done Refocusing !");
         })();
       },
       [navigation],
@@ -47,9 +43,7 @@ function Clues({ navigation }) {
     (async () => {
       try {
         // { 3: { _id: 3, title: '...', ...}}
-        console.log('main -> updating clues !');
         const storedClues = await AsyncStorage.getItem('currentClues');
-        console.log('main -> Done updating clues !');
         const loadedClues = JSON.parse(storedClues || '{}');
         setClues(loadedClues);
         setIsLoading(false);

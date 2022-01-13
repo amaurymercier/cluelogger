@@ -17,9 +17,10 @@ function Investigations({ navigation }) {
 
   useEffect(() => {
     setIsLoading(false);
-    const focusListener = navigation.addListener('focus', () =>
-      setIsFocused(true),
-    );
+    const focusListener = navigation.addListener('focus', () => {
+      setScanned(false);
+      setIsFocused(true);
+    });
     const blurListener = navigation.addListener('blur', () =>
       setIsFocused(false),
     );
@@ -43,7 +44,9 @@ function Investigations({ navigation }) {
       if (clueId in allClues) {
         const storedClues = await AsyncStorage.getItem('currentClues');
         const loadedClues = JSON.parse(storedClues || '{}');
-        loadedClues[clueId] = allClues[clueId];
+        if (!(clueId in loadedClues)) {
+          loadedClues[clueId] = allClues[clueId];
+        }
         loadedClues[clueId].key = Object.keys(loadedClues).length;
         await AsyncStorage.setItem('currentClues', JSON.stringify(loadedClues));
         navigation.jumpTo('Indices trouvés');
