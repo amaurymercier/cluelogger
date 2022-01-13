@@ -17,7 +17,10 @@ function Code({ navigation }) {
         }
         loadedClues[codeKey].key = Object.keys(loadedClues).length;
         await AsyncStorage.setItem('currentClues', JSON.stringify(loadedClues));
-        navigation.jumpTo('Indices trouvés');
+        navigation.jumpTo('Indices trouvés', {
+          screen: 'ClueDetail',
+          params: { clueId: codeKey },
+        });
       }
     })();
     setText(t);

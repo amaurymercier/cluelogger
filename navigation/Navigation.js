@@ -166,6 +166,15 @@ export default function simpleTabContainer() {
               );
             },
           }}
+          listeners={({ navigation, route }) => ({
+            tabPress: (e) => {
+              // Prevent default action
+              e.preventDefault();
+
+              // Do something with the `navigation` object
+              navigation.navigate('Indices trouvés', { screen: 'Clues' });
+            },
+          })}
         />
       </ClueLoggerTab.Navigator>
     </NavigationContainer>

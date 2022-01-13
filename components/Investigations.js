@@ -49,7 +49,10 @@ function Investigations({ navigation }) {
         }
         loadedClues[clueId].key = Object.keys(loadedClues).length;
         await AsyncStorage.setItem('currentClues', JSON.stringify(loadedClues));
-        navigation.jumpTo('Indices trouvés');
+        navigation.jumpTo('Indices trouvés', {
+          screen: 'ClueDetail',
+          params: { clueId },
+        });
       } else {
         console.log(`Invalid clueId: ${clueId}`);
       }
