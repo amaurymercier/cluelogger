@@ -57,6 +57,7 @@ function ClueDetail({ route, navigation }) {
     (async () => {
       const storedClues = await AsyncStorage.getItem('currentClues');
       const loadedClues = JSON.parse(storedClues || '{}');
+      console.log(route.params.clueId);
       if (route.params.clueId in loadedClues) {
         setClue(loadedClues[route.params.clueId]);
       } else {

@@ -7,8 +7,8 @@ function ClueList(props) {
   return (
     <FlatList
       style={style.list}
-      data={props.Clues}
-      keyExtractor={(item) => item._id.toString()}
+      data={props.Clues.sort((a, b) => a.key < b.key)}
+      keyExtractor={(item) => item.key.toString()}
       renderItem={({ item }) => (
         <ClueItem Clue={item} navigation={props.navigation} />
       )}

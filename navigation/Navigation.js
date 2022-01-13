@@ -13,6 +13,7 @@ import Investigations from '../components/Investigations';
 import Messages from '../components/Messages';
 
 import colors from '../helpers/Colors';
+import Code from '../components/Code';
 
 // {
 //     tabBarOptions: {
@@ -39,12 +40,16 @@ function CluesStackNavigator() {
   const CluesStack = createStackNavigator();
 
   return (
-    <CluesStack.Navigator>
+    <CluesStack.Navigator
+      screenOptions={{
+        header: () => {},
+      }}
+    >
       <CluesStack.Screen
         name="Clues"
         component={Clues}
         options={{
-          title: 'Clues',
+          title: 'Indices trouvés',
           headerStyle: {
             backgroundColor: colors[3],
           },
@@ -81,33 +86,6 @@ function CluesStackNavigator() {
 }
 
 export default function simpleTabContainer() {
-  // const InvestigationsStack = createStackNavigator();
-  //
-  // const InvestigationsStackContainer = (
-  //   <NavigationContainer>
-  //     <InvestigationsStack.Navigator>
-  //       <InvestigationsStack.Screen
-  //         name="Investigations"
-  //         component={Investigations}
-  //         options={{
-  //           title: 'Investigations',
-  //           headerStyle: {
-  //             backgroundColor: colors[3],
-  //           },
-  //           headerTintColor: '#FFF',
-  //           headerTitleStyle: {
-  //             fontSize: 22,
-  //             fontFamily: 'Roboto',
-  //           },
-  //           cardStyle: {
-  //             backgroundColor: '#FFF',
-  //           },
-  //         }}
-  //       />
-  //     </InvestigationsStack.Navigator>
-  //   </NavigationContainer>
-  // );
-
   const MessagesStack = createStackNavigator();
 
   const MessagesStackContainer = (
@@ -139,14 +117,14 @@ export default function simpleTabContainer() {
     <NavigationContainer>
       <ClueLoggerTab.Navigator>
         <ClueLoggerTab.Screen
-          name="Investigations"
-          component={Investigations}
+          name="Code"
+          component={Code}
           options={{
-            tabBarLabel: 'Investigations',
+            tabBarLabel: 'Code',
             tabBarIcon: ({ tintColor }) => {
               return (
                 <Icon
-                  name="search"
+                  name="lock"
                   size={28}
                   color={tintColor}
                   style={styles.icon}
@@ -156,10 +134,27 @@ export default function simpleTabContainer() {
           }}
         />
         <ClueLoggerTab.Screen
-          name="CluesStack"
+          name="Investigations"
+          component={Investigations}
+          options={{
+            tabBarLabel: 'Investigations',
+            tabBarIcon: ({ tintColor }) => {
+              return (
+                <Icon
+                  name="qrcode"
+                  size={28}
+                  color={tintColor}
+                  style={styles.icon}
+                />
+              );
+            },
+          }}
+        />
+        <ClueLoggerTab.Screen
+          name="Indices trouvés"
           component={CluesStackNavigator}
           options={{
-            tabBarLabel: 'Clues',
+            tabBarLabel: 'Indices',
             tabBarIcon: ({ tintColor }) => {
               return (
                 <Icon

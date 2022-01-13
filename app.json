@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "cluelogger",
+    "name": "Soirée Murder",
     "slug": "cluelogger",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,13 +17,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.murderparty.cluelogger",
+      "buildNumber": "0.0.1"
     },
     "android": {
+      "package": "com.murderparty.cluelogger",
+      "versionCode": 0,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

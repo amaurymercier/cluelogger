@@ -40,15 +40,16 @@ function Investigations({ navigation }) {
     // Ensure clue is loaded in storage
     (async () => {
       const clueId = parseInt(data, 10);
-      const storedClues = await AsyncStorage.getItem('currentClues');
-      const loadedClues = JSON.parse(storedClues || '{}');
       if (clueId in allClues) {
+        const storedClues = await AsyncStorage.getItem('currentClues');
+        const loadedClues = JSON.parse(storedClues || '{}');
         loadedClues[clueId] = allClues[clueId];
+        loadedClues[clueId].key = Object.keys(loadedClues).length;
+        await AsyncStorage.setItem('currentClues', JSON.stringify(loadedClues));
+        navigation.jumpTo('Indices trouvés');
       } else {
         console.log(`Invalid clueId: ${clueId}`);
       }
-      await AsyncStorage.setItem('currentClues', JSON.stringify(loadedClues));
-      navigation.jumpTo('CluesStack');
     })();
     setScanned(true);
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
