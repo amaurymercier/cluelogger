@@ -9,4 +9,4 @@
 //    'orange'
 // ]
 
-export default ['#DAF8A5', '#ADF035', '#94E700', '#6DAA00', '#476E00', 'green'];
+export default ['#f8d6d3', '#f8d6d3', '#f8d6d3', '#f8d6d3', '#476E00', 'green'];

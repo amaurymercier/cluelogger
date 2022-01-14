@@ -6,7 +6,7 @@ import { WaveIndicator } from 'react-native-indicators';
 
 import colors from '../helpers/Colors';
 
-const indiceImage = require('../assets/indice.png');
+const indiceImage = require('../assets/clue.png');
 
 function ClueItem(props) {
   const [isLoadingImage, setIsLoadingImage] = useState(true);

@@ -16,7 +16,7 @@ import { PacmanIndicator, WaveIndicator } from 'react-native-indicators';
 import colors from '../helpers/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const indiceImage = require('../assets/indice.png');
+const indiceImage = require('../assets/clue.png');
 
 function adaptDatabaseText(text) {
   let adaptedText = '';
