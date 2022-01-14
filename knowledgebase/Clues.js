@@ -210,6 +210,18 @@ export default {
     text: "Vous en apprenez plus sur la révocation et l'invocation des démons. A l'intérieur, un document résume comment procéder à la révocation d'un démon.",
     image: 'clue.png',
   },
+  42: {
+    _id: 42,
+    title: 'Marque sur le cadavre',
+    text: 'En observant le cadavre, vous apercevez une marque étrange faite avec un couteau dans la chair... Comme deux ronds entrecroisés.',
+    image: 'clue.png',
+  },
+  43: {
+    _id: 43,
+    title: 'Le cadavre de BHL',
+    text: 'Il est manifestement mort de deux coups de couteaux dans le dos.',
+    image: 'clue.png',
+  },
   code_91D3: {
     _id: 'code_91D3',
     title: 'Miroir, mon beau miroir',
